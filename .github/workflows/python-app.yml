@@ -44,7 +44,20 @@ jobs:
           pip install pytest pipenv
           # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pipenv install
+      
+#       - name: Import Secrets using CyberArk DAP Secret Fetcher
+#         uses: infamousjoeg/conjur-action
+#         id: secrets
+#         with:
+#           url: ${{ secrets.CONJUR_URL }}
+#           account: cyberarkdemo
+#           host_id: ${{ secrets.CONJUR_USERNAME }}
+#           api_key: ${{ secrets.CONJUR_API_KEY }}
+#           secrets: db/sqlusername | sql_username; db/sql_password
 
       - name: Run after all tests completed
         if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success'
-        run: echo "Hello world we done made it"
+        run: echo "Hello world we done made it, Secrete is $SQLUSERNAME"
+        env:
+          SQL_USERNAME: ${{ steps.secrets.outputs.SQLUSERNAME }}
+          DB_PASSWORD: ${{ steps.secrets.outputs.SQL_PASSWORD }}
