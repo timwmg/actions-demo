@@ -13,17 +13,37 @@ jobs:
     container: python:3.6.12-alpine3.12
     
     steps:
-    # Checkout the source code
-    - name: Checkout source code
-      uses: actions/checkout@v2
+      - name: Wait for Unit test to succeed
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-unit
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Unit Tests
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       
-    # install the dependencies
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest pipenv
-        # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        pipenv install
+      - name: Wait for Functional test to succeed
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-func
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Functional Tests
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
-    - name: Run after all tests completed
-      run: echo "Hello world we done made it"
+    
+      # Checkout the source code
+      - name: Checkout source code
+        if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success'
+        uses: actions/checkout@v2
+      
+      # install the dependencies
+      - name: Install dependencies
+        if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success'
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pipenv
+          # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pipenv install
+
+      - name: Run after all tests completed
+        if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success'
+        run: echo "Hello world we done made it"
