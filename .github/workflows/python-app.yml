@@ -5,22 +5,24 @@ name: Python application
 
 on:
   push:
-    branches-ignore: master
+    branches-ignore: main
 
 jobs:
   python-build:
     runs-on: ubuntu-latest
-
     steps:
+    # Checkout the source code
     - name: Checkout source code
       uses: actions/checkout@v2
   
+    # Setup the python env
     - name: Set up Python 3.5
       uses: actions/setup-python@v2
       with:
         python-version: 3.5.4
         # 3.5.2 was not found
       
+    # install the dependencies
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -28,11 +30,13 @@ jobs:
         # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pipenv install --clear --system
     
+    # install python stuff
     - name: Install pyenv and pyenv-virtualenv
       run: |
         brew update
         brew install pyenv pyenv-virtualenv
 
+    # Do the pyenv installs
     - name: Pyenv install
       run: |
         pyenv install 3.5.4
@@ -40,6 +44,7 @@ jobs:
         pyenv local productionready
         pyenv rehash
         
+    # Run the super linter
     - name: Lint with Super-Linter
       # uses: github/super-linter@v3
       # env:
@@ -48,7 +53,8 @@ jobs:
       #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo "Would have run linting across code base and failed on errors"
-          
+
+    # Run the pytests     
     - name: Test with pytest
       run: |
         pytest .
