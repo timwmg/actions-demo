@@ -64,10 +64,14 @@ jobs:
           tags: |
             admiralawkbar/python-builder:latest
             admiralawkbar/python-builder:v1
-            ghcr.io/lukaspersonal/django-realworld-example-app:latest
-            ghcr.io/lukaspersonal/django-realworld-example-app:v1
-            ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
-            ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:v1
+          
+          # tags: |
+          #   admiralawkbar/python-builder:latest
+          #   admiralawkbar/python-builder:v1
+          #   ghcr.io/lukaspersonal/django-realworld-example-app:latest
+          #   ghcr.io/lukaspersonal/django-realworld-example-app:v1
+          #   ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+          #   ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:v1
 
 
 #  - name: Build, tag, and push image to Amazon ECR
