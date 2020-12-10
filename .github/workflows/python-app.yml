@@ -16,13 +16,6 @@ jobs:
     # Checkout the source code
     - name: Checkout source code
       uses: actions/checkout@v2
-  
-#     # Setup the python env
-#     - name: Set up Python 3.5
-#       uses: actions/setup-python@v2
-#       with:
-#         python-version: 3.5.4
-#         # 3.5.2 was not found
       
     # install the dependencies
     - name: Install dependencies
@@ -31,27 +24,6 @@ jobs:
         pip install pytest pipenv
         # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pipenv install
-    
-#     # install python stuff
-#     - name: Install pyenv and pyenv-virtualenv
-#       run: |
-#         brew update
-#         brew install pyenv pyenv-virtualenv
 
-#     # Do the pyenv installs
-#     - name: Pyenv install
-#       run: |
-#         pyenv install 3.5.4
-#         pyenv virtualenv 3.5.4 productionready
-#         pyenv local productionready
-#         pyenv rehash
-
-    # Run the pytests     
-    - name: Functional Test with pytest
-      run: |
-        pytest .
-    
-    # Run Unit Test
-    - name: Run Unit test with python unittest
-      run: |
-        python -m unittest tests/test_something.py
+    - name: Run after all tests completed
+      run: "Echo Hello world we done made it"
