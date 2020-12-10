@@ -21,13 +21,17 @@ LABEL com.github.actions.name="Python Image" \
       org.opencontainers.image.vendor="GitHub" \
       org.opencontainers.image.description="Its a python build image"
 
+######################
+# Make the directory #
+######################
+RUN mkdir -p /action/lib
 
 #############################
 # Copy scripts to container #
 #############################
-COPY lib /
+COPY lib /action/lib
 
 ######################
 # Set the entrypoint #
 ######################
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/action/lib/entrypoint.sh"]
