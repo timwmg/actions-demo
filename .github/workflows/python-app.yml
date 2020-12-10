@@ -55,6 +55,11 @@ jobs:
         echo "Would have run linting across code base and failed on errors"
 
     # Run the pytests     
-    - name: Test with pytest
+    - name: Functional Test with pytest
       run: |
         pytest .
+    
+    # Run Unit Test
+    - name: Run Unit test with python unittest
+      run: |
+        python -m unittest tests/test_something.py
