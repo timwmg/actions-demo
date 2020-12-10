@@ -8,7 +8,7 @@ on:
     branches-ignore: main
 
 jobs:
-  python-build:
+  python-build-and-test:
     runs-on: ubuntu-latest
     steps:
     # Checkout the source code
@@ -43,18 +43,13 @@ jobs:
         pyenv virtualenv 3.5.4 productionready
         pyenv local productionready
         pyenv rehash
-        
-    # Run the super linter
-    - name: Lint with Super-Linter
-      # uses: github/super-linter@v3
-      # env:
-      #   VALIDATE_ALL_CODEBASE: false
-      #   DEFAULT_BRANCH: master
-      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        echo "Would have run linting across code base and failed on errors"
 
     # Run the pytests     
-    - name: Test with pytest
+    - name: Functional Test with pytest
       run: |
         pytest .
+    
+    # Run Unit Test
+    - name: Run Unit test with python unittest
+      run: |
+        python -m unittest tests/test_something.py
