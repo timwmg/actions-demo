@@ -26,4 +26,4 @@ jobs:
         pipenv install
 
     - name: Run after all tests completed
-      run: "Echo Hello world we done made it"
+      run: echo "Hello world we done made it"
