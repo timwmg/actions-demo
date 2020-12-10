@@ -29,7 +29,7 @@ RUN mkdir -p /action/lib
 #############################
 # Copy scripts to container #
 #############################
-COPY lib /action/lib
+COPY library /action/lib
 
 ######################
 # Set the entrypoint #
