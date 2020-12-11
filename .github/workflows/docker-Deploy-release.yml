@@ -83,8 +83,8 @@ jobs:
             const create = await github.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: "New issue created",
-              body: 'Heres some base data'
+              title: "Creating release ${{ github.event.release.tag_name }}",
+              body: 'Currently deploying...'
             })
             console.log('create', create)
             return create.data.number
