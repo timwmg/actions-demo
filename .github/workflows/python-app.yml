@@ -29,16 +29,24 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           checkName: Functional Tests
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      
+      - name: Wait for Functional test to succeed
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-jmeter
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: JMeter Tests
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
     
       # Checkout the source code
       - name: Checkout source code
-        if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success'
+        if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success' && steps.wait-for-jmeter.outputs.conclusion == 'success'
         uses: actions/checkout@v2
       
       # install the dependencies
       - name: Install dependencies
-        if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success'
+        if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success' && steps.wait-for-jmeter.outputs.conclusion == 'success'
         run: |
           python -m pip install --upgrade pip
           pip install pytest pipenv
@@ -56,7 +64,7 @@ jobs:
 #           secrets: db/sqlusername | sql_username; db/sql_password
 
       - name: Run after all tests completed
-        if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success'
+        if: steps.wait-for-unit.outputs.conclusion == 'success' && steps.wait-for-func.outputs.conclusion == 'success' && steps.wait-for-jmeter.outputs.conclusion == 'success'
         run: echo "Hello world we done made it, Secrete is $SQLUSERNAME"
         env:
           SQL_USERNAME: ${{ steps.secrets.outputs.SQLUSERNAME }}
