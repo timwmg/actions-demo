@@ -69,3 +69,24 @@ jobs:
         env:
           SQL_USERNAME: ${{ steps.secrets.outputs.SQLUSERNAME }}
           DB_PASSWORD: ${{ steps.secrets.outputs.SQL_PASSWORD }}
+      
+#       - name: Ansible Tower update
+#         uses: vortegon/github-action-ansible-tower@v1
+#         with:
+#           ansible-tower-user: ${{ secrets.ANSIBLE_USER }}
+#           ansible-tower-pass: ${{ secrets.ANSIBLE_PASS }}
+#           ansible-tower-url: ${{ secrets.ANSIBLE_URL }}
+#           template-id: "1254"
+#           additional-vars: |
+#             {
+#               "var_azure_rm_subid": "${{ secrets.azureSubscription }}",
+#               "AZURE_RM_CLIENTID": "${{ secrets.azureClientId }}",
+#               "AZURE_RM_SECRET": "${{ secrets.azureClientSecret }}",
+#               "var_environment": "Development",
+#               "var_ctpService": "Co-Dev",
+#               "var_owner": "john.doe@test.com",
+#               "var_deploymentId": "TCDTCX",
+#               "var_chargeCode": "32405098",
+#               "var_location": "eastus",
+#               "var_productApp": "INT"
+#             }
