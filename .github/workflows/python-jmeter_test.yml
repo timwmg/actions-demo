@@ -32,3 +32,10 @@ jobs:
       with:
         testFilePath: tests/sample_test.jmx
         outputReportsFolder: reports/
+    
+    # Uploadint he artifacts back to github run
+    - name: Upload Artifcats
+      uses: actions/upload-artifact@v2
+      with:
+        name: JMeter-Results
+        path: reports/*
