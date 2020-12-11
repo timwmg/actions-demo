@@ -39,3 +39,12 @@ jobs:
       with:
         name: JMeter-Results
         path: reports/*
+   
+    - name: Upload to AWS S3
+      uses: shallwefootball/s3-upload-action@master
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_bucket: ${{ secrets.S3_BUCKET }}
+        source_dir: 'reports'
