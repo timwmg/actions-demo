@@ -1,0 +1,8 @@
+# This is the codeowners file that limits who can sign off on anthing being pushed to main
+# https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-code-owners
+
+* @admiralawkbar
+
+*.py @jwiebalk
+
+.github/workflows/* @github/actions-support
