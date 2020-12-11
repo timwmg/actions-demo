@@ -1,0 +1,91 @@
+{
+	"info": {
+		"_postman_id": "373156d7-65e6-4987-92c5-effa266fde70",
+		"name": "AHM API Calls",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all measurements",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e18b2b22-c428-4a4f-816e-d1b487f533db",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"}); ",
+							"",
+							"pm.test(\"Content-Type is applicaton json\", function () {",
+							"    pm.response.to.be.header(\"Content-Type\", \"application/json\")",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/v1/measurements",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"measurements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a measurements",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02b21a11-c0e2-4e62-b0b2-f1ee0c27035f",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"dia\": 30,\n\t\"pul\": 66,\n\t\"sys\": 77\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/v1/measurements",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"v1",
+						"measurements"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
