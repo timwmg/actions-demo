@@ -1,0 +1,7 @@
+# This is the codeowners file that limits who can sign off on anthing being pushed to main
+
+* @admiralawkbar
+
+*.py @jwiebalk
+
+.github/workflows/* @github/actions-support
